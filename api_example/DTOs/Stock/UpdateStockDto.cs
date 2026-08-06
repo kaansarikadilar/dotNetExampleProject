@@ -27,4 +27,4 @@ namespace api_example.DTOs.Stock
         [Range(1,100000000000000000)]
         public long MarketCap { get; set; }
     }
-}d
+}

@@ -18,7 +18,7 @@ namespace api_example.DTOs.Stock
         [Range(1,100000)]
         public decimal Purchase { get; set; } 
         [Required]
-        [Range(1,1000)]
+        [Range(0,1000)]
         public decimal LastDiv { get; set; }
         [Required]
         [MaxLength(50,ErrorMessage ="Industry cant be longer than 50 characters")]
@@ -27,4 +27,4 @@ namespace api_example.DTOs.Stock
         [Range(1,100000000000000000)]
         public long MarketCap { get; set; }
     }
-}
+}d

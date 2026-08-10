@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace api_example.Models
 {
+    [Table("Comments")]
     public class Comment
     {
         public int Id { get; set; }

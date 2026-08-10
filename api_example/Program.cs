@@ -2,6 +2,8 @@ using api_example.Data;
 using api_example.Models;
 using api_example.Repository;
 using api_example.Repository.CommentRepositoryImpl;
+using api_example.Service.IService;
+using api_example.Service.ServiceImpl;
 using api_example.StockRepository;
 using api_example.StockRepository.StockRepositoryImpl;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -9,6 +11,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using Scalar.AspNetCore;
 
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
@@ -17,6 +20,34 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddSwaggerGen(option =>
+{
+    option.SwaggerDoc("v1", new OpenApiInfo { Title = "Demo API", Version = "v1" });
+    option.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        In = ParameterLocation.Header,
+        Description = "Please enter a valid token",
+        Name = "Authorization",
+        Type = SecuritySchemeType.Http,
+        BearerFormat = "JWT",
+        Scheme = "Bearer"
+    });
+    option.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type=ReferenceType.SecurityScheme,
+                    Id="Bearer"
+                }
+            },
+            new string[]{}
+        }
+    });
+});
 builder.Services.AddControllers().AddNewtonsoftJson(options =>
 {
     options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore; 
@@ -32,7 +63,7 @@ builder.Services.AddIdentity<AppUser,IdentityRole>(Options =>
     Options.Password.RequireLowercase = true;
     Options.Password.RequireUppercase = true;
     Options.Password.RequireNonAlphanumeric = true;
-    Options.Password.RequiredLength = 12;
+    Options.Password.RequiredLength = 8;
 })
 .AddEntityFrameworkStores<ApplicationDBContext>();
 
@@ -47,7 +78,6 @@ builder.Services.AddAuthentication(Options =>
 
 }).AddJwtBearer(Options =>
 {
-#pragma warning disable CS8604 // Possible null reference argument.
     Options.TokenValidationParameters = new TokenValidationParameters
     {
         ValidateIssuer = true,
@@ -56,13 +86,13 @@ builder.Services.AddAuthentication(Options =>
         ValidAudience = builder.Configuration["JWT:Audience"],
         ValidateIssuerSigningKey = true,
         IssuerSigningKey = new SymmetricSecurityKey(
-            System.Text.Encoding.UTF8.GetBytes(builder.Configuration["JWT:SigningKey"])
+            System.Text.Encoding.UTF8.GetBytes(builder.Configuration["JWT:SigningKey"]!)
         )
     };
-#pragma warning restore CS8604 // Possible null reference argument.
 });
 builder.Services.AddScoped<IStockRepository,StockRepositoryImpl>();
 builder.Services.AddScoped<ICommentRepository,CommentRepositoryImpl>();
+builder.Services.AddScoped<ITokenService,TokenServiceImpl>();
 
 
 var app = builder.Build();

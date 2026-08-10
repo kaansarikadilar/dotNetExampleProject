@@ -4,6 +4,7 @@ using api_example.Mappers;
 using api_example.StockRepository;
 using Microsoft.AspNetCore.Mvc;
 using api_example.Helpers;
+using Microsoft.AspNetCore.Authorization;
 
 namespace api_example.Controllers
 {
@@ -21,6 +22,7 @@ namespace api_example.Controllers
         }
         
         [HttpGet]
+        [Authorize]
         public async Task<ActionResult> GetAll([FromQuery] QueryObjects query)
         {
             if (!ModelState.IsValid)
@@ -33,6 +35,7 @@ namespace api_example.Controllers
         }
 
         [HttpGet("{id:int}")] 
+        [Authorize]
         public async Task<IActionResult> GetById([FromRoute] int id)
         {
             if (!ModelState.IsValid)

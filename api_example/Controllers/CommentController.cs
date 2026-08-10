@@ -8,6 +8,7 @@ using api_example.Mappers;
 using api_example.Models;
 using api_example.Repository;
 using api_example.StockRepository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Identity.Client;
 
@@ -26,6 +27,8 @@ namespace api_example.Controllers
         }
 
         [HttpGet]
+        [Authorize]
+
         public async  Task<IActionResult> GetCommentsAll()
         {
 
@@ -39,6 +42,8 @@ namespace api_example.Controllers
             return Ok(CommentDTO);
         }
         [HttpGet("{id:int}")]
+        [Authorize]
+
         public async Task<IActionResult> GetById([FromRoute]int id)
         {
             if (!ModelState.IsValid)

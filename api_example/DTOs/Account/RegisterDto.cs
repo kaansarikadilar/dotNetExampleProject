@@ -15,6 +15,7 @@ namespace api_example.DTOs.Account
     [EmailAddress]
     public string? Email { get; set; }
     [Required]
+    [MinLength(8,ErrorMessage ="Password must be longer than 8 characters")]
     public string? Password { get; set; }
     }
 }

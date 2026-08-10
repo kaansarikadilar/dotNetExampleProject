@@ -14,7 +14,7 @@ namespace api_example.DTOs.Comment
         public string Title { get; set; } = string.Empty;
         [Required]
         [MinLength(2,ErrorMessage ="Content must be longer than 2 characters")]
-        [MaxLength(30,ErrorMessage ="Content must be shorter than 30 characters")]
+        [MaxLength(100,ErrorMessage ="Content must be shorter than 100 characters")]
         public string Content { get; set; } = string.Empty; 
 
     }

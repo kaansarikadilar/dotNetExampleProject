@@ -12,12 +12,13 @@ namespace api_example.Mappers
     {
          public static CommentDTO toCommentDto(this Comment commentModel)
         {
-             return new CommentDTO
+            return new CommentDTO
              {
                  Id = commentModel.Id,
                  Title = commentModel.Title,
                  Content = commentModel.Content,
                  CreatedOn = commentModel.CreatedOn,
+                 CreatedBy = commentModel.AppUser.UserName,
                  StockId = commentModel.StockId
              };
         }

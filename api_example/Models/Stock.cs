@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace api_example.Models
 {
-    [Table("Stoock")]
+    [Table("Stock")]
     public class Stock
     {
         public int Id { get; set; }

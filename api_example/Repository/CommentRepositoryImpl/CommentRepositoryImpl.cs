@@ -40,12 +40,12 @@ namespace api_example.Repository.CommentRepositoryImpl
 
         public async Task<Comment?> GetByIdAsync(int id)
         {
-                return await _applicationDbContext.Comments.FindAsync(id);
+                return await _applicationDbContext.Comments.Include(a => a.AppUser).FirstOrDefaultAsync(c => c.Id == id );
         }
 
         public async Task<List<Comment>> GetCommentsAsync()
         {
-            return await _applicationDbContext.Comments.ToListAsync();
+            return await _applicationDbContext.Comments.Include(a => a.AppUser).ToListAsync();
         }
 
         async Task<Comment?> ICommentRepository.UpdateAsync(int id, Comment commendModel)

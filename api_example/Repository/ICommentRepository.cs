@@ -17,5 +17,6 @@ namespace api_example.Repository
         Task<Comment?>UpdateAsync(int id,Comment commendModel);
 
         Task<Comment?>DeleteAsync(int id);
+        
     }
 }

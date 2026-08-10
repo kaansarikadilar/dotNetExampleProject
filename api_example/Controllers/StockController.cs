@@ -30,8 +30,10 @@ namespace api_example.Controllers
                 return BadRequest(ModelState);
             }
             var stocks = await _stockRepo.GetAllAsync(query);
-            var stockDto = stocks.Select(s => s.ToStockDTO());
-            return Ok(stocks);
+
+            var stockDto = stocks.Select(s => s.ToStockDTO()).ToList();
+            
+            return Ok(stockDto);
         }
 
         [HttpGet("{id:int}")] 
@@ -51,6 +53,7 @@ namespace api_example.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> Create([FromBody] CreateStockRequestDto stockDto)
         {
             if (!ModelState.IsValid)
@@ -64,6 +67,7 @@ namespace api_example.Controllers
 
         [HttpPut]
         [Route("{id:int}")]
+        [Authorize]
         public async Task<IActionResult>
          Update([FromRoute] int id ,[FromBody] UpdateStockDto updateDto)
         {
@@ -82,6 +86,7 @@ namespace api_example.Controllers
 
         [HttpDelete]
         [Route("{id:int}")]
+        [Authorize]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
             if (!ModelState.IsValid)

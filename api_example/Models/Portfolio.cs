@@ -11,7 +11,7 @@ namespace api_example.Models
     {
         public string AppUserId { get; set; } = String.Empty;
 
-        public string StockId { get; set; } = String.Empty;
+        public int StockId { get; set; }
 
         public AppUser? AppUser { get; set; } 
 

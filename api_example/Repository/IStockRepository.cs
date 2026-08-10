@@ -12,6 +12,8 @@ namespace api_example.StockRepository
     {
         Task<List<Stock>> GetAllAsync(QueryObjects query);
         Task<Stock?> GetById(int id); // we have a question mark cuz it can be null
+
+        Task<Stock?>GetBySymbolAsync(string symbol);
         Task<Stock> CreateAsync(Stock stockModel);
         Task<Stock?> UpdateAsync(int id,UpdateStockDto stockDto);
         Task<Stock?> DeleteAsync(int id); // we have a question mark cuz it can be null

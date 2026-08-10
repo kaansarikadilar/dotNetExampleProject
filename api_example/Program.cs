@@ -2,6 +2,7 @@ using api_example.Data;
 using api_example.Models;
 using api_example.Repository;
 using api_example.Repository.CommentRepositoryImpl;
+using api_example.Repository.PortfolioRepositoryImpl;
 using api_example.Service.IService;
 using api_example.Service.ServiceImpl;
 using api_example.StockRepository;
@@ -93,6 +94,7 @@ builder.Services.AddAuthentication(Options =>
 builder.Services.AddScoped<IStockRepository,StockRepositoryImpl>();
 builder.Services.AddScoped<ICommentRepository,CommentRepositoryImpl>();
 builder.Services.AddScoped<ITokenService,TokenServiceImpl>();
+builder.Services.AddScoped<IPortfolioRepository,PortfolioRepositoryImpl>();
 
 
 var app = builder.Build();

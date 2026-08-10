@@ -20,7 +20,7 @@ namespace api_example.StockRepository.StockRepositoryImpl
         }
         public async Task<List<Stock>> GetAllAsync(QueryObjects query)
         {
-            var stocks =  _applicationDBContext.Stock.Include(c => c.Comments).AsQueryable();
+            var stocks =  _applicationDBContext.Stock.Include(c => c.Comments).ThenInclude(a => a.AppUser).AsQueryable();
             if (!string.IsNullOrWhiteSpace(query.CompanyName))
             {
                 stocks = stocks.Where(s => s.CompanyName.Contains(query.CompanyName));
@@ -62,7 +62,7 @@ namespace api_example.StockRepository.StockRepositoryImpl
         
         public async Task<Stock?> GetById(int id)
         {
-                return await _applicationDBContext.Stock.Include(c => c.Comments).FirstOrDefaultAsync (i => i.Id == id);
+                return await _applicationDBContext.Stock.Include(c => c.Comments).ThenInclude(a => a.AppUser).FirstOrDefaultAsync (i => i.Id == id);
         }
         public async Task<Stock?> UpdateAsync(int id, UpdateStockDto stockDto)
         {
@@ -86,10 +86,14 @@ namespace api_example.StockRepository.StockRepositoryImpl
              return existingStock;
 
         }
-
         public Task<bool> StockExists(int id)
         {
             return  _applicationDBContext.Stock.AnyAsync(s => s.Id == id);
+        }
+
+        public async Task<Stock?> GetBySymbolAsync(string symbol)
+        {
+            return await _applicationDBContext.Stock.FirstOrDefaultAsync(s=>s.Symbol == symbol);
         }
     }
 }

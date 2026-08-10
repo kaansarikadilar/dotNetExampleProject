@@ -12,6 +12,7 @@ namespace api_example.Mappers
     {
          public static CommentDTO toCommentDto(this Comment commentModel)
         {
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
             return new CommentDTO
              {
                  Id = commentModel.Id,
@@ -21,6 +22,7 @@ namespace api_example.Mappers
                  CreatedBy = commentModel.AppUser.UserName,
                  StockId = commentModel.StockId
              };
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
         }
          public static Comment toCommentFromCreate(this CreateCommentDto  commentDto, int stockId)
         {

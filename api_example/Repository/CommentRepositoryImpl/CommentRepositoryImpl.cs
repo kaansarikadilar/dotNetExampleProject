@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using api_example.Data;
+using api_example.Helpers;
 using api_example.Models;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
@@ -42,12 +43,23 @@ namespace api_example.Repository.CommentRepositoryImpl
         {
                 return await _applicationDbContext.Comments.Include(a => a.AppUser).FirstOrDefaultAsync(c => c.Id == id );
         }
-
-        public async Task<List<Comment>> GetCommentsAsync()
+        public async Task<List<Comment>> GetCommentsAsync(CommentQueryObject queryObject)
         {
-            return await _applicationDbContext.Comments.Include(a => a.AppUser).ToListAsync();
-        }
+            var comments = _applicationDbContext.Comments.Include(a => a.AppUser).AsQueryable();
 
+            if (!string.IsNullOrWhiteSpace(queryObject.Symbol))
+            {
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
+                comments = comments.Where(s=>s.Stock.Symbol == queryObject.Symbol);
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
+            }
+            ;
+            if(queryObject.IsDescending == true)
+            {
+                comments = comments.OrderByDescending(c=>c.CreatedOn);
+            }
+            return await comments.ToListAsync();
+        }
         async Task<Comment?> ICommentRepository.UpdateAsync(int id, Comment commendModel)
         {
             var existingStock = await _applicationDbContext.Comments.FindAsync(id);
@@ -58,6 +70,7 @@ namespace api_example.Repository.CommentRepositoryImpl
             existingStock.Title = commendModel.Title;
             existingStock.Content = commendModel.Content;
 
+            await _applicationDbContext.Comments.Include(a=>a.AppUser).FirstOrDefaultAsync(c => c.Id == id);
             await _applicationDbContext.SaveChangesAsync();
             return existingStock;
         }

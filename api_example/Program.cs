@@ -95,6 +95,8 @@ builder.Services.AddScoped<IStockRepository,StockRepositoryImpl>();
 builder.Services.AddScoped<ICommentRepository,CommentRepositoryImpl>();
 builder.Services.AddScoped<ITokenService,TokenServiceImpl>();
 builder.Services.AddScoped<IPortfolioRepository,PortfolioRepositoryImpl>();
+builder.Services.AddScoped<IFMPService,FMPServiceImpl>();
+builder.Services.AddHttpClient<IFMPService,FMPServiceImpl>();
 
 
 var app = builder.Build();
@@ -110,6 +112,13 @@ app.MapScalarApiReference(options =>
     });}
 
 app.UseHttpsRedirection();
+
+app.UseCors(x=>x
+    .AllowAnyMethod()
+    .AllowAnyHeader()
+    .AllowCredentials()
+    //.WithOrigins("https://localhost:5062")
+    .SetIsOriginAllowed(origin => true));
 
 app.UseAuthentication();
 app.UseAuthorization();

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "IonPsNiEw8A=",
+  "dgSpecHash": "Gg9TRzHIvts=",
   "success": true,
-  "projectFilePath": "/Users/kaansarikadilar/Library/kod/dotNetExampleProject/api_example/api_example.csproj",
+  "projectFilePath": "/Users/kaansarikadilar/Library/kod/dotNetExampleProject_with_ai /api_example/api_example.csproj",
   "expectedPackageFiles": [
     "/Users/kaansarikadilar/.nuget/packages/azure.core/1.47.1/azure.core.1.47.1.nupkg.sha512",
     "/Users/kaansarikadilar/.nuget/packages/azure.identity/1.14.2/azure.identity.1.14.2.nupkg.sha512",

@@ -51,7 +51,6 @@ namespace api_example.Controllers
             }
             return Ok(stock.ToStockDTO());
         }
-
         [HttpPost]
         [AllowAnonymous]
         public async Task<IActionResult> Create([FromBody] CreateStockRequestDto stockDto)

@@ -122,12 +122,18 @@ namespace api_example.Controllers
             {
                 return BadRequest(ModelState);
             }
+             var username = User.GetUsername();
+            var appUser = await _userManager.FindByNameAsync(username);
+            
             var commentModel = await _CommentRepo.DeleteAsync(id);
             if(commentModel == null)
             {
                 return NotFound("Comment cant be found to delete");
             }
-            return Ok(commentModel);
+            commentModel.AppUserId = appUser?.Id; // added this line to get the user id
+
+            return Ok(commentModel.toCommentDto()); 
+            // turned it into the dto to return only the parameters we want
         }
     }
 }

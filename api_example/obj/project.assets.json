@@ -4469,11 +4469,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/kaansarikadilar/Library/kod/dotNetExampleProject/api_example/api_example.csproj",
+      "projectUniqueName": "/Users/kaansarikadilar/Library/kod/dotNetExampleProject_with_ai /api_example/api_example.csproj",
       "projectName": "api_example",
-      "projectPath": "/Users/kaansarikadilar/Library/kod/dotNetExampleProject/api_example/api_example.csproj",
+      "projectPath": "/Users/kaansarikadilar/Library/kod/dotNetExampleProject_with_ai /api_example/api_example.csproj",
       "packagesPath": "/Users/kaansarikadilar/.nuget/packages/",
-      "outputPath": "/Users/kaansarikadilar/Library/kod/dotNetExampleProject/api_example/obj/",
+      "outputPath": "/Users/kaansarikadilar/Library/kod/dotNetExampleProject_with_ai /api_example/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/kaansarikadilar/.nuget/NuGet/NuGet.Config"

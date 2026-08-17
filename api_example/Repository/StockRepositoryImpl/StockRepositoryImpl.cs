@@ -52,9 +52,7 @@ namespace api_example.StockRepository.StockRepositoryImpl
         {
                 stocks = stocks.OrderBy(s => s.Id);
         }
-
             var skipNumber = (query.PageNumber - 1) * query.PageSize;
-
             return await stocks.Skip(skipNumber).Take(query.PageSize).ToListAsync();
         }
         public async Task<Stock> CreateAsync(Stock stockModel)
